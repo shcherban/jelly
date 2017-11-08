@@ -319,7 +319,7 @@ class Stage
     @dom.appendChild(table)
     colors = {}
     @cells = for y in [0...map.length]
-      row = map[y].split(//)
+      row = map[y].split('')
       tr = document.createElement('tr')
       table.appendChild(tr)
       for x in [0...row.length]
@@ -497,7 +497,7 @@ class Wall
 class JellyCell
   constructor: (@color) ->
     @dom = document.createElement('div')
-    @dom.className = 'cell jelly ' + color
+    @dom.className = 'cell jelly ' + @color
     @x = 0
     @y = 0
     @color_master = this
