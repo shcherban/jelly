@@ -62,7 +62,7 @@ levels = [
 
   # Anchored jellies are specified separately after the
   # level map. Instead of [row, row, row...in the presence of
-  # anchors the level specification is: 
+  # anchors the level specification is:
   # [ [row,row,row...], [ anchor, anchor, anchor...] ].
   # Each anchor starts from a colored non-black jelly's
   # coordinates and specifies the direction in which it's "held".
@@ -79,10 +79,10 @@ levels = [
     [
       { x:2, y:7, dir:'down' },
       { x:5, y:7, dir:'down' },
-    ]                    
+    ]
   ],
 
-  [ [ "xxxxxxxxxxxxxx", 
+  [ [ "xxxxxxxxxxxxxx",
       "xxxx x  x xxxx",
       "xxx  g  b  xxx",
       "xx   x  x   xx",
@@ -143,7 +143,7 @@ levels = [
       { x:10, y:1, dir:'left' },
     ],
   ],
-  
+
   [ [ "xxxxxxxxxxxxxx",
       "xxr rr  rr rxx",
       "xxx  x  x  xxx",
@@ -368,7 +368,7 @@ class Stage
       dy = directions[anchor.dir][1]
       classname = directions[anchor.dir][2]
       property = directions[anchor.dir][3]
-      
+
       me = @cells[anchor.y][anchor.x]
       other = @cells[anchor.y + dy][anchor.x + dx]
       me.mergeWith(other, anchor.dir)
@@ -510,9 +510,20 @@ class JellyCell
       'up':    ['borderTop',    'borderBottom'],
       'down':  ['borderBottom', 'borderTop']
     }
+    corners = {
+      'left': [['borderTopLeftRadius', 'borderBottomLeftRadius'],['borderTopRightRadius', 'borderBottomRightRadius']],
+      'right': [['borderTopRightRadius', 'borderBottomRightRadius'],['borderTopLeftRadius', 'borderBottomLeftRadius']],
+      'up': [['borderTopLeftRadius', 'borderTopRightRadius'],['borderBottomLeftRadius', 'borderBottomRightRadius']],
+      'down': [['borderBottomLeftRadius', 'borderBottomRightRadius'],['borderTopLeftRadius', 'borderTopRightRadius']]
+    }
     # Remove internal borders, whether merging with other jelly or wall.
     @dom.style[borders[dir][0]] = 'none'
     other.dom.style[borders[dir][1]] = 'none'
+
+    @dom.style[corners[dir][0][0]] = '0'
+    @dom.style[corners[dir][0][1]] = '0'
+    other.dom.style[corners[dir][1][0]] = '0'
+    other.dom.style[corners[dir][1][1]] = '0'
 
     # If merging with wall, jelly becomes immovable.
     @jelly.immovable = true if other instanceof Wall
@@ -523,7 +534,7 @@ class JellyCell
       for cell in other_master.color_mates
         cell.color_master = @color_master
       @color_master.color_mates =
-        @color_master.color_mates.concat(other_master.color_mates)  
+        @color_master.color_mates.concat(other_master.color_mates)
     if other instanceof JellyCell and @jelly != other.jelly
       @jelly.merge(other.jelly)
 
