@@ -1,8 +1,8 @@
 {
   "scripts": {
     "build": "npm run compile-coffee && npm run copy-html",
-    "compile-coffee": "coffee --compile --transpile --inline-map --output build src/jelly.coffee",
-    "copy-html": "cpx src/index.html build"
+    "compile-coffee": "coffee --compile --transpile --inline-map --output docs src/jelly.coffee",
+    "copy-html": "cpx src/index.html docs"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",
