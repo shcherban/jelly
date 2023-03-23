@@ -469,7 +469,9 @@ class Stage
 
   checkForCompletion: ->
     if @num_monochromatic_blocks <= @num_colors
-      alert("Congratulations! Level completed.")
+      #alert("Congratulations! Level completed.")
+      win.style.display = 'block'
+      win.onclick = () -> win.style.display = 'none'
     return
 
   doOneMerge: ->
@@ -603,3 +605,5 @@ levelPicker.addEventListener 'change', () ->
 document.getElementById('reset').addEventListener 'click', ->
   stage.dom.innerHTML = ''
   stage = new Stage(stage.dom, levels[level-1])
+
+win=document.getElementById('win')
